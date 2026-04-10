@@ -37,11 +37,14 @@ def stream_markup_timer(_, chat_id, played, dur, is_playing=True):
     # Calculate progress bar
     played_sec = time_to_seconds(played)
     duration_sec = time_to_seconds(dur)
-    percentage = (played_sec / duration_sec) * 100 if duration_sec > 0 else 0
-    umm = math.floor(percentage)
-    filled = min(10, math.floor(umm / 10))
-    bar = "▰" * filled + "▱" * (10 - filled)
-
+    if duration_sec > 0:
+        percentage = (played_sec / duration_sec) * 100
+        filled = round(percentage / 100 * 12)  # 12 adalah panjang bar
+        filled = max(0, min(12, filled))  # batasi 0-12
+        bar = "█" * filled + "▒" * (12 - filled)
+    else:
+        bar = "▒" * 12
+    
     # Show queue button only if there are items in the queue
     queue_len = len(db.get(chat_id, []))
     q_btn = []
@@ -57,9 +60,9 @@ def stream_markup_timer(_, chat_id, played, dur, is_playing=True):
             )
         ],
         [
-            InlineKeyboardButton(text="❚❚" if is_playing else "▶︎", callback_data=f"ADMIN Toggle|{chat_id}", style=ButtonStyle.PRIMARY),
-            InlineKeyboardButton(text="⏭", callback_data=f"ADMIN Skip|{chat_id}", style=ButtonStyle.PRIMARY),
-            InlineKeyboardButton(text="⏹", callback_data=f"ADMIN Stop|{chat_id}", style=ButtonStyle.DANGER),
+            InlineKeyboardButton(text="ᴘᴀᴜꜱᴇ" if is_playing else "ʀᴇꜱᴜᴍᴇ", callback_data=f"ADMIN Toggle|{chat_id}", style=ButtonStyle.PRIMARY),
+            InlineKeyboardButton(text="ɴᴇxᴛ", callback_data=f"ADMIN Skip|{chat_id}", style=ButtonStyle.PRIMARY),
+            InlineKeyboardButton(text="ꜱᴛᴏᴘ", callback_data=f"ADMIN Stop|{chat_id}", style=ButtonStyle.DANGER),
         ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close", style=ButtonStyle.DANGER),
@@ -78,9 +81,9 @@ def stream_markup(_, chat_id, is_playing=True):
 
     buttons = [
         [
-            InlineKeyboardButton(text="❚❚" if is_playing else "▶︎", callback_data=f"ADMIN Toggle|{chat_id}", style=ButtonStyle.PRIMARY),
-            InlineKeyboardButton(text="⏭", callback_data=f"ADMIN Skip|{chat_id}", style=ButtonStyle.PRIMARY),
-            InlineKeyboardButton(text="⏹", callback_data=f"ADMIN Stop|{chat_id}", style=ButtonStyle.DANGER),
+            InlineKeyboardButton(text="ᴘᴀᴜꜱᴇ" if is_playing else "ʀᴇꜱᴜᴍᴇ", callback_data=f"ADMIN Toggle|{chat_id}", style=ButtonStyle.PRIMARY),
+            InlineKeyboardButton(text="ɴᴇxᴛ", callback_data=f"ADMIN Skip|{chat_id}", style=ButtonStyle.PRIMARY),
+            InlineKeyboardButton(text="ꜱᴛᴏᴘ", callback_data=f"ADMIN Stop|{chat_id}", style=ButtonStyle.DANGER),
         ],
         [
             InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close", style=ButtonStyle.DANGER),
