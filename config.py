@@ -64,8 +64,8 @@ COOKIES_URL = os.getenv("COOKIES_URL", "https://batbin.me/candied")
 YT_API_URL = os.getenv("YT_API_URL", "https://shrutibots.site")
 
 # --- Image URLs ---
-START_IMG_URL = os.getenv("START_IMG_URL", "https://files.catbox.moe/u05mzo.jpg")
-_DEFAULT_IMG = "https://files.catbox.moe/u05mzo.jpg"
+START_IMG_URL = os.getenv("START_IMG_URL", "https://files.catbox.moe/zvziwk.jpg")
+_DEFAULT_IMG = "https://files.catbox.moe/zvziwk.jpg"
 PING_IMG_URL = os.getenv("PING_IMG_URL", _DEFAULT_IMG)
 PLAYLIST_IMG_URL = os.getenv("PLAYLIST_IMG_URL", _DEFAULT_IMG)
 STATS_IMG_URL = os.getenv("STATS_IMG_URL", _DEFAULT_IMG)
